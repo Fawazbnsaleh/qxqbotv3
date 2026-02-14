@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "al_rased"
+version = "0.1.0"
+description = "A Telegram bot for smart detection and monitoring."
+requires-python = ">=3.9"
+dependencies = [
+    "telethon",
+    "python-dotenv",
+    "sqlalchemy",
+    "aiosqlite",
+    "termcolor",
+    "scikit-learn",
+    "numpy",
+    "joblib",
+    "arabic-reshaper",
+    "python-bidi",
+    "pillow"
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+select = ["E", "F", "I"]
+ignore = []
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers"
+asyncio_mode = "auto"
+testpaths = [
+    "tests",
+]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"

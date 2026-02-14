@@ -1,0 +1,23 @@
+# Git
+.git
+.gitignore
+
+# Python
+al_rased/venv
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.mypy_cache
+
+# Environment
+.env
+.env.example
+
+# OS
+.DS_Store
+
+# Data (if huge and mounted via volume, don't copy it in)
+al_rased/data

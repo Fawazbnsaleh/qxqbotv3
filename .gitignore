@@ -1,0 +1,45 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Telethon sessions
+*.session
+*.session-journal
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Project Data
+al_rased/data/bot.db
+al_rased/data/group_messages/
+al_rased/data/live_reports/
+al_rased/data/results/
+al_rased/data/samples4Review/
+
+# Keep labeled samples as they are valuable training data
+# al_rased/data/labeledSamples/ is NOT ignored

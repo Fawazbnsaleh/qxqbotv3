@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: al_rased_bot
+    restart: unless-stopped
+    env_file:
+      - al_rased/.env
+    volumes:
+      - ./al_rased/data:/app/al_rased/data
+      - ./al_rased/al_rased_data.db:/app/al_rased/al_rased_data.db
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+  monitor:
+    build: .
+    container_name: al_rased_monitor
+    command: [ "./al_rased/start_monitor.sh" ]
+    restart: unless-stopped
+    env_file:
+      - al_rased/.env
+    volumes:
+      - ./al_rased/data:/app/al_rased/data
+      - ./al_rased/al_rased_data.db:/app/al_rased/al_rased_data.db
+    depends_on:
+      - bot

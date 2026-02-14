@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Rased Review Tool</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Al-Rased Data Audit</h1>
+            <div id="stats-bar">Loading stats...</div>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="search" placeholder="بحث في النص...">
+            <select id="filter-category">
+                <option value="all">جميع الفئات</option>
+                <option value="طبيعي">طبيعي</option>
+                <option value="غش أكاديمي (عرض)">غش أكاديمي (عرض)</option>
+                <option value="غش أكاديمي (طلب)">غش أكاديمي (طلب)</option>
+                <option value="احتيال طبي (عرض)">احتيال طبي (عرض)</option>
+                <option value="احتيال طبي (طلب)">احتيال طبي (طلب)</option>
+                <option value="احتيال مالي (عرض)">احتيال مالي (عرض)</option>
+                <option value="احتيال مالي (طلب)">احتيال مالي (طلب)</option>
+                <option value="تهكير (عرض)">تهكير (عرض)</option>
+                <option value="تهكير (طلب)">تهكير (طلب)</option>
+                <option value="غير أخلاقي (عرض)">غير أخلاقي (عرض)</option>
+                <option value="غير أخلاقي (طلب)">غير أخلاقي (طلب)</option>
+                <option value="سبام">سبام</option>
+            </select>
+            <select id="filter-confidence">
+                <option value="all">جميع مستويات الثقة</option>
+                <option value="gray">⚠️ المنطقة الرمادية</option>
+                <option value="low">🔴 ثقة منخفضة</option>
+                <option value="high">🟢 ثقة عالية</option>
+            </select>
+            <select id="filter-match">
+                <option value="all">الكل</option>
+                <option value="mismatch">❌ تصنيف مختلف عن التنبؤ</option>
+                <option value="match">✅ تصنيف متطابق</option>
+            </select>
+            <span id="filter-count" class="filter-count"></span>
+            <button id="backup-btn" class="backup-btn" onclick="createBackup()">💾 نسخة احتياطية</button>
+            <button id="retrain-btn" class="retrain-btn" onclick="retrainModel()"
+                style="background: linear-gradient(135deg, #FF9800, #F57C00); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">🔄
+                إعادة التدريب</button>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">⏳ جاري تحميل البيانات والتنبؤات...</div>
+
+        <div id="sample-list">
+            <!-- Samples will be injected here -->
+        </div>
+    </div>
+    <script src="/static/app.js?v=2"></script>
+</body>
+
+</html>

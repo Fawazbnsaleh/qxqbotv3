@@ -1,0 +1,7 @@
+python-telegram-bot[job-queue]
+redis
+aiosqlite
+python-dotenv
+pandas
+scikit-learn
+joblib
