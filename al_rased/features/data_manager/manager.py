@@ -2,7 +2,9 @@ import json
 import logging
 from pathlib import Path
 
-DATA_DIR = Path("data")
+# Use absolute path relative to this module (al_rased/features/data_manager/)
+_MODULE_DIR = Path(__file__).parent.parent.parent  # al_rased/
+DATA_DIR = _MODULE_DIR / "data"
 SAMPLES_FILE = DATA_DIR / "samples4Review/data.json"
 
 def get_review_data():

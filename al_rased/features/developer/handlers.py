@@ -123,7 +123,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     from core.database import get_published_categories, get_banned_names, get_bot_mode
     
     categories = await get_published_categories()
-    active_count = sum(1 for c in categories if c.get("is_enabled", False))
+    active_count = len(categories)  # get_published_categories returns only enabled categories
     
     # Count banned names
     total_banned = 0
@@ -890,6 +890,7 @@ async def back_to_main(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     keyboard = [
         [InlineKeyboardButton("🧠 الأنظمة الذكية", callback_data="smart_systems")],
+        [InlineKeyboardButton("⚙️ وضع التشغيل", callback_data="bot_mode_menu")],
         [InlineKeyboardButton("⚡ نظام التفعيل", callback_data="activation_menu")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)

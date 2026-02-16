@@ -1,4 +1,18 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+import hashlib
+
+# Hash cache for name deletion (maps hash -> name)
+_del_name_hash_cache = {}
+
+def _hash_name(name: str) -> str:
+    """Generate short hash for name and cache it."""
+    h = hashlib.md5(name.encode()).hexdigest()[:8]
+    _del_name_hash_cache[h] = name
+    return h
+
+def get_name_from_hash(h: str) -> str:
+    """Get name from hash cache."""
+    return _del_name_hash_cache.get(h)
 
 def get_developer_menu():
     """Main developer menu."""
@@ -50,11 +64,13 @@ def get_banned_names_menu(category: str):
     return InlineKeyboardMarkup(keyboard)
 
 def get_delete_banned_names_menu(category: str, names: list):
-    """List of names to delete."""
+    """List of names to delete (uses hash to prevent callback overflow)."""
     keyboard = []
     row = []
     for name in names:
-        row.append(InlineKeyboardButton(f"❌ {name}", callback_data=f"admin_del_ban_do_{category}_{name}"))
+        name_hash = _hash_name(name)
+        display = name[:20] + "..." if len(name) > 20 else name
+        row.append(InlineKeyboardButton(f"❌ {display}", callback_data=f"admin_del_ban_do_{category}_{name_hash}"))
         if len(row) == 2:
             keyboard.append(row)
             row = []

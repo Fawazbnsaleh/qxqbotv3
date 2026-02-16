@@ -85,17 +85,22 @@ class TelethonMonitor:
         # Check admin status (with caching)
         cache_key = f"{chat_id}_{user_id}"
         
-        if cache_key not in self._admin_cache:
-            try:
-                # Get participant info
-                participant = await self.client.get_permissions(chat_id, user_id)
-                is_admin = participant.is_admin or participant.is_creator
-                self._admin_cache[cache_key] = is_admin
-            except Exception as e:
-                # If can't check, assume not admin
-                self._admin_cache[cache_key] = False
+        # Check cache with TTL (300 seconds)
+        if cache_key in self._admin_cache:
+            cached_value, cached_time = self._admin_cache[cache_key]
+            if time.time() - cached_time < 300:
+                return (cached_value, False)
         
-        return (self._admin_cache.get(cache_key, False), False)
+        try:
+            # Get participant info
+            participant = await self.client.get_permissions(chat_id, user_id)
+            is_admin = participant.is_admin or participant.is_creator
+            self._admin_cache[cache_key] = (is_admin, time.time())
+        except Exception as e:
+            # If can't check, assume not admin
+            self._admin_cache[cache_key] = (False, time.time())
+        
+        return (self._admin_cache[cache_key][0], False)
     
     async def _process_message(self, event):
         """Process incoming message through AI model."""

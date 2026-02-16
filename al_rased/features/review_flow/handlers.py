@@ -1,14 +1,21 @@
 import asyncio
+import os
 from telegram import Update
 from telegram.ext import ContextTypes, MessageHandler, filters
 from core.database import get_group, save_topic, get_topic
 from features.data_manager.manager import get_review_data
 import logging
 
+DEVELOPER_ID = int(os.getenv("DEVELOPER_ID", "0"))
+
 async def check_samples(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Only allow "check" or "فحص"
     text = update.message.text
     if text != "فحص":
+        return
+
+    # Only allow developer
+    if DEVELOPER_ID == 0 or update.effective_user.id != DEVELOPER_ID:
         return
 
     # 1. Verify this is the review group
